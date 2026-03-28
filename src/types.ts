@@ -1,0 +1,263 @@
+export interface Project {
+  id: string;
+  title: string;
+  description: string;
+  fullDescription: string;
+  image: string;
+  tags: string[];
+  tools: string[];
+  role: string;
+  date: string;
+  sector: string;
+  challenge: string;
+  processing: string;
+  insights: string;
+  metrics: {
+    label: string;
+    value: string;
+    subtext: string;
+    primary?: boolean;
+  }[];
+  codeSnippet?: string;
+  tableauUrl?: string;
+  es?: {
+    title: string;
+    description: string;
+    fullDescription: string;
+    role: string;
+    sector: string;
+    challenge: string;
+    processing: string;
+    insights: string;
+    metrics: {
+      label: string;
+      value: string;
+      subtext: string;
+    }[];
+  };
+}
+
+export interface BlogPost {
+  id: string;
+  title: string;
+  excerpt: string;
+  content: string;
+  date: string;
+  category: 'Tutorial' | 'Resources';
+  tags: string[];
+}
+
+export const PROJECTS: Project[] = [
+  {
+    id: 'energy-solar',
+    title: 'Home Energy & Solar Insights',
+    description: 'Analyzing residential energy consumption patterns to optimize solar panel placement and ROI.',
+    fullDescription: 'A comprehensive analysis of residential energy dynamics, focused on monitoring household consumption patterns and maximizing financial returns from solar investments through data-driven intelligence.',
+    image: 'https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?auto=format&fit=crop&q=80&w=1000',
+    tags: ['Tableau', 'SQL'],
+    tools: ['Tableau', 'Excel', 'SQL'],
+    role: 'BI Analyst',
+    date: '2024',
+    sector: 'Renewable Energy',
+    challenge: 'Modern homes are becoming complex micro-grids. The challenge was identifying specific efficiency opportunities within granular residential data. Most homeowners lack visibility into how their daily habits misalign with solar peak production hours, leading to wasted clean energy and higher utility bills.',
+    processing: 'The project involved merging residential smart meter data (1 hour intervals summary) with solar inverter logs. with Excel for extraction and SQL for financial modeling.',
+    insights: 'The final analysis revealed that shifting only 30% of energy-intensive tasks to daylight hours could substantially reduce reliance on peak-rate grid electricity—or even enable full energy self-sufficiency with the addition of battery storage. The Tableau dashboard now functions as a monitoring tool to track and identify monthly cost-saving opportunities.',
+    metrics: [
+      { label: 'Potential Savings', value: '25%', subtext: 'Reduced annual utility expenditure through load shifting strategies.' },
+      { label: 'Solar ROI', value: '4.5 years', subtext: 'Payback period achieved by maximizing self-consumption vs. grid export.', primary: true }
+    ],
+    tableauUrl: 'https://public.tableau.com/views/ResidentialSolarSystem/Main?:language=en-US&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link',
+    es: {
+      title: 'Energía Hogareña y Perspectivas Solares',
+      description: 'Analizando patrones de consumo de energía residencial para optimizar la colocación de paneles solares y el ROI.',
+      fullDescription: 'Un análisis exhaustivo de la dinámica de la energía residencial, centrado en el seguimiento de los patrones de consumo doméstico y la maximización de los rendimientos financieros de las inversiones solares a través de la inteligencia basada en datos.',
+      role: 'Analista de BI',
+      sector: 'Energía Renovable',
+      challenge: 'Los hogares modernos se están convirtiendo en micro-redes complejas. El desafío fue identificar oportunidades de eficiencia específicas dentro de los datos residenciales granulares. La mayoría de los propietarios carecen de visibilidad sobre cómo sus hábitos diarios no se alinean con las horas de máxima producción solar, lo que lleva a un desperdicio de energía limpia y facturas de servicios públicos más altas.',
+      processing: 'El proyecto consistió en fusionar datos de medidores inteligentes residenciales (resumen de intervalos de 1 hora) con registros de inversores solares. Con Excel para la extracción y SQL para el modelado financiero.',
+      insights: 'El análisis final reveló que cambiar solo el 30% de las tareas de alto consumo de energía a las horas del día podría reducir sustancialmente la dependencia de la electricidad de la red en horas pico, o incluso permitir la autosuficiencia energética total con la adición de almacenamiento en batería. El tablero de Tableau ahora funciona como una herramienta de monitoreo para rastrear e identificar oportunidades mensuales de ahorro de costos.',
+      metrics: [
+        { label: 'Ahorros Potenciales', value: '25%', subtext: 'Reducción del gasto anual en servicios públicos mediante estrategias de cambio de carga.' },
+        { label: 'ROI Solar', value: '4.5 años', subtext: 'Período de recuperación logrado maximizando el autoconsumo frente a la exportación a la red.' }
+      ]
+    }
+  },
+  {
+    id: 'real-estate',
+    title: 'Real Estate Analytics',
+    description: 'End-to-end data pipeline for real estate business intelligence: transforming transactional data into actionable analytical dashboards.',
+    fullDescription: 'End-to-end data pipeline for real estate business intelligence: transforming transactional data into actionable analytical dashboards.',
+    image: 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&q=80&w=1000',
+    tags: ['Python', 'DuckDB', 'dbt', 'Prefect', 'Tableau'],
+    tools: ['Python', 'DuckDB', 'dbt', 'Prefect', 'Tableau'],
+    role: 'BI Data Analyst',
+    date: '2021 → 2025',
+    sector: 'Real Estate / PropTech',
+    challenge: 'In a volatile market, traditional comparative market analysis (CMA) often fails to capture non-linear relationships between property characteristics and final sale prices. The goal was to build an engine that could ingest thousands of data points to provide an objective baseline for smarter strategies. Build a scalable analytics architecture to centralize valuable data from the transactional system, transform it into reliable information, and deliver it quickly and efficiently to support decision-making.',
+    processing: 'Synthesized datasets with specific property characteristics. The pipeline involved transforming raw data into high-dimensional model inputs. Evolution toward a modern end-to-end data pipeline built on an industry-standard stack, implemented using open-source tools.',
+    insights: 'By integrating these insights into investment strategies, it is possible to define precise property valuation and identify undervalued assets with high growth potential before they reached peak market visibility.',
+    metrics: [
+      { label: 'Rental vs Sale Avg. closing time', value: '3.2x faster', subtext: 'Efficiency improvement in market analysis.' },
+      { label: 'Processed listings', value: '+1.000.000', subtext: 'Total data points handled by the pipeline.', primary: true }
+    ],
+    codeSnippet: `-- dbt model — marts/fact_publicaciones.sql
+CASE operation_type
+    WHEN 'Venta'             THEN ROUND(precio * 0.03, 2)
+    WHEN 'Alquiler'          THEN ROUND(precio * 0.10, 2)
+    WHEN 'Alquiler temporal' THEN ROUND(precio * 0.15, 2)
+END AS ingreso_comision,
+
+DATE_DIFF('day', fecha_alta, fecha_baja) AS dias_publicacion,
+
+CASE
+    WHEN superficie_total > 0 THEN ROUND(precio / superficie_total, 2)
+END AS precio_por_m2`,
+    tableauUrl: 'https://public.tableau.com/app/profile/fabio2874/viz/DashboardRemax_17727426979740/Principal',
+    es: {
+      title: 'Analítica Inmobiliaria',
+      description: 'Pipeline de datos de extremo a extremo para inteligencia de negocios inmobiliarios: transformando datos transaccionales en tableros analíticos accionables.',
+      fullDescription: 'Pipeline de datos de extremo a extremo para inteligencia de negocios inmobiliarios: transformando datos transaccionales en tableros analíticos accionables.',
+      role: 'Analista de Datos BI',
+      sector: 'Inmobiliario / PropTech',
+      challenge: 'En un mercado volátil, el análisis de mercado comparativo (CMA) tradicional a menudo no logra capturar las relaciones no lineales entre las características de la propiedad y los precios finales de venta. El objetivo era construir un motor que pudiera ingerir miles de puntos de datos para proporcionar una línea base objetiva para estrategias más inteligentes. Construir una arquitectura analítica escalable para centralizar datos valiosos del sistema transaccional, transformarlos en información confiable y entregarla de manera rápida y eficiente para apoyar la toma de decisiones.',
+      processing: 'Conjuntos de datos sintetizados con características de propiedad específicas. El pipeline implicó transformar datos brutos en entradas de modelo de alta dimensión. Evolución hacia un pipeline de datos moderno de extremo a extremo construido sobre un stack estándar de la industria, implementado utilizando herramientas de código abierto.',
+      insights: 'Al integrar estos conocimientos en las estrategias de inversión, es posible definir una valoración precisa de la propiedad e identificar activos infravalorados con alto potencial de crecimiento antes de que alcancen su máxima visibilidad en el mercado.',
+      metrics: [
+        { label: 'Tiempo promedio de cierre Alquiler vs Venta', value: '3.2x más rápido', subtext: 'Mejora de eficiencia en el análisis de mercado.' },
+        { label: 'Propiedades procesadas', value: '+1.000.000', subtext: 'Puntos de datos totales manejados por el pipeline.' }
+      ]
+    }
+  },
+  {
+    id: 'world-cup',
+    title: 'FIFA World Cup 2022 Analysis',
+    description: 'A deep dive into tournament dynamics, uncovering trends in match statistics and competitive patterns through data visualization.',
+    fullDescription: 'A deep dive into tournament dynamics, uncovering trends in match statistics and competitive patterns through data visualization.',
+    image: 'https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&q=80&w=1000',
+    tags: ['Tableau', 'Excel', 'SQL'],
+    tools: ['Tableau', 'Excel', 'SQL'],
+    role: 'BI Data Analyst',
+    date: '2022',
+    sector: 'Sports/ Tournament Insights',
+    challenge: 'Improving Insights & Accuracy. The primary challenge was to distill over dense statistical data into meaningful narratives. In a tournament defined by high-stakes upsets and tactical evolutions this aim to explain the underlying competitive patterns.',
+    processing: 'Data was aggregated from multiple feeds. Exploratory Data Analysis (EDA) focused on cleansing match event logs, normalizing tracking data, and calculating custom metrics.',
+    insights: 'The analysis revealed that clinical finishing outweighed raw possession. Teams that prioritized rapid transitions and high-value shot creation consistently outperformed those with high volume but low-quality attempts. Spain dominated the ball at 75.8% yet was eliminated in the Round of 16, while Argentina won the championship with 57.4% — prioritizing efficiency over control.',
+    metrics: [
+      { label: 'Champion\'s avg. possession — Argentina', value: '57.4%', subtext: 'Prioritizing efficiency over control.' },
+      { label: 'Possession gap - most vs least dominant teams', value: '+24pts', subtext: 'Difference between extreme tactical approaches.', primary: true }
+    ],
+    tableauUrl: 'https://public.tableau.com/views/WC2022_16853689263590/Cover?:language=en-US&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link',
+    es: {
+      title: 'Análisis de la Copa Mundial de la FIFA 2022',
+      description: 'Una inmersión profunda en la dinámica del torneo, descubriendo tendencias en las estadísticas de los partidos y patrones competitivos a través de la visualización de datos.',
+      fullDescription: 'Una inmersión profunda en la dinámica del torneo, descubriendo tendencias en las estadísticas de los partidos y patrones competitivos a través de la visualización de datos.',
+      role: 'Analista de Datos BI',
+      sector: 'Deportes / Perspectivas del Torneo',
+      challenge: 'Mejorando Perspectivas y Precisión. El desafío principal fue destilar datos estadísticos densos en narrativas significativas. En un torneo definido por sorpresas de alto riesgo y evoluciones tácticas, esto busca explicar los patrones competitivos subyacentes.',
+      processing: 'Los datos se agregaron de múltiples fuentes. El Análisis Exploratorio de Datos (EDA) se centró en la limpieza de los registros de eventos de los partidos, la normalización de los datos de seguimiento y el cálculo de métricas personalizadas.',
+      insights: 'El análisis reveló que la finalización clínica superó a la posesión bruta. Los equipos que priorizaron las transiciones rápidas y la creación de tiros de alto valor superaron consistentemente a aquellos con un alto volumen pero intentos de baja calidad. España dominó el balón con un 75.8% pero fue eliminada en octavos de final, mientras que Argentina ganó el campeonato con un 57.4%, priorizando la eficiencia sobre el control.',
+      metrics: [
+        { label: 'Posesión promedio del campeón — Argentina', value: '57.4%', subtext: 'Priorizando la eficiencia sobre el control.' },
+        { label: 'Brecha de posesión - equipos más vs menos dominantes', value: '+24pts', subtext: 'Diferencia entre enfoques tácticos extremos.' }
+      ]
+    }
+  }
+];
+
+export const BLOG_POSTS: BlogPost[] = [
+  {
+    id: 'window-functions',
+    title: 'Mastering Advanced Window Functions in PostgreSQL',
+    excerpt: 'Window functions are one of the most powerful features in SQL. In this tutorial, we dive deep into LAG, LEAD, and OVER clauses to perform complex time-series analysis with ease.',
+    content: `
+Window functions are one of the most powerful features in SQL. They allow you to perform calculations across a set of table rows that are somehow related to the current row.
+
+### Why use Window Functions?
+Unlike regular aggregate functions, window functions do not cause rows to become grouped into a single output row. The rows retain their separate identities.
+
+### Key Functions
+- **LAG()**: Access data from a previous row.
+- **LEAD()**: Access data from a subsequent row.
+- **RANK()**: Assign a rank to each row within a partition.
+
+### Example
+\`\`\`sql
+SELECT 
+    date, 
+    sales,
+    LAG(sales) OVER (ORDER BY date) as prev_day_sales
+FROM daily_sales;
+\`\`\`
+    `,
+    date: 'October 24, 2023',
+    category: 'Tutorial',
+    tags: ['SQL', 'PostgreSQL']
+  },
+  {
+    id: 'geospatial-dashboards',
+    title: 'Python Libraries for Dynamic Geospatial Dashboards',
+    excerpt: 'A curated selection of the best Python libraries for mapping and visualization, focusing on Streamlit and Plotly Express for logistics data.',
+    content: `
+Geospatial data visualization is crucial for logistics and urban planning. Python offers a rich ecosystem for this.
+
+### Top Libraries
+1. **Plotly Express**: Great for interactive maps with minimal code.
+2. **Folium**: Built on Leaflet.js, perfect for complex map overlays.
+3. **Streamlit**: The easiest way to turn scripts into shareable web apps.
+
+### Use Case: Logistics
+Visualizing delivery routes and warehouse locations can reveal significant inefficiencies in supply chain management.
+    `,
+    date: 'October 12, 2023',
+    category: 'Resources',
+    tags: ['Python', 'GIS']
+  },
+  {
+    id: 'public-datasets',
+    title: 'My Curated List of Public Datasets for ML Practice',
+    excerpt: 'Finding good data is half the battle. Here are 25+ high-quality, clean datasets across various domains like finance, health, and urban planning.',
+    content: `
+Finding high-quality data is often the most time-consuming part of a data science project. Here are my top picks:
+
+### Finance
+- **Yahoo Finance API**: Historical stock prices.
+- **LendingClub Dataset**: Peer-to-peer lending data.
+
+### Health
+- **UCI Machine Learning Repository**: Heart disease, diabetes datasets.
+- **Kaggle COVID-19 Open Research Dataset**.
+
+### Urban Planning
+- **NYC Open Data**: Taxi trips, tree census.
+- **London Datastore**: Transport and housing data.
+    `,
+    date: 'September 28, 2023',
+    category: 'Resources',
+    tags: ['ML', 'Datasets']
+  },
+  {
+    id: 'matplotlib-styles',
+    title: 'Customizing Matplotlib Styles for Professional Reports',
+    excerpt: 'Learn how to create a custom RC profile to make all your Python visualizations brand-compliant and ready for publication.',
+    content: `
+Default Matplotlib plots often look dated. Customizing them is essential for professional reports.
+
+### The RC Params
+You can modify the \`rcParams\` dictionary to set global styles.
+
+\`\`\`python
+import matplotlib.pyplot as plt
+
+plt.rcParams['font.family'] = 'sans-serif'
+plt.rcParams['axes.edgecolor'] = '#333333'
+plt.rcParams['grid.alpha'] = 0.3
+\`\`\`
+
+### Style Sheets
+Alternatively, you can create a \`.mplstyle\` file and load it with \`plt.style.use('path/to/style')\`.
+    `,
+    date: 'September 15, 2023',
+    category: 'Tutorial',
+    tags: ['Python', 'Data Viz']
+  }
+];

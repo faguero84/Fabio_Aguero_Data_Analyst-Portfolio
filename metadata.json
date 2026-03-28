@@ -1,0 +1,7 @@
+{
+  "name": "Fabio.Data Portfolio",
+  "description": "Professional portfolio of Fabio, a BI & Data Analyst specializing in data storytelling and visualization.",
+  "requestFramePermissions": [
+    "geolocation"
+  ]
+}
