@@ -62,9 +62,6 @@ const translations = {
       subtitle: "Exploring data, sharing resources, and documenting analysis steps.",
       search: "Search blog...",
       popularTags: "Popular Tags",
-      newsletter: "Join the Newsletter",
-      newsletterDesc: "Get the latest tutorials and resources delivered to your inbox.",
-      subscribe: "Subscribe",
       noPosts: "No posts found matching your criteria.",
       allPosts: "All Posts",
       tutorials: "Tutorials",
@@ -122,9 +119,6 @@ const translations = {
       subtitle: "Explorando datos, compartiendo recursos y documentando pasos de análisis.",
       search: "Buscar en el blog...",
       popularTags: "Etiquetas Populares",
-      newsletter: "Únete al Boletín",
-      newsletterDesc: "Recibe los últimos tutoriales y recursos en tu bandeja de entrada.",
-      subscribe: "Suscribirse",
       noPosts: "No se encontraron publicaciones que coincidan con tus criterios.",
       allPosts: "Todos",
       tutorials: "Tutoriales",
@@ -580,14 +574,6 @@ const BlogView = ({ lang }: { lang: 'en' | 'es' }) => {
               </button>
             ))}
           </div>
-        </div>
-
-        <div className="rounded-xl bg-primary/5 p-6 border border-primary/10">
-          <h4 className="text-base font-bold text-slate-900 dark:text-white mb-2">{t.newsletter}</h4>
-          <p className="text-sm text-slate-600 dark:text-slate-400 mb-4 leading-relaxed">{t.newsletterDesc}</p>
-          <button className="w-full bg-primary text-white py-2.5 rounded-lg text-sm font-bold hover:opacity-90 transition-opacity">
-            {t.subscribe}
-          </button>
         </div>
       </aside>
     </div>
