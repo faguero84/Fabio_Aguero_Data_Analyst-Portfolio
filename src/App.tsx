@@ -37,6 +37,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import Markdown from 'react-markdown';
 import { cn } from './lib/utils';
 import { PROJECTS, BLOG_POSTS, Project, BlogPost } from './types';
+import { DaxLayout, TableauLayout, LODLayout, FiltersLayout } from './components/BlogLayouts';
 
 // --- Translations ---
 
@@ -63,8 +64,8 @@ const translations = {
       search: "Search blog...",
       popularTags: "Popular Tags",
       noPosts: "No posts found matching your criteria.",
-      allPosts: "All Posts",
-      tutorials: "Tutorials",
+      allPosts: "All",
+      tutorials: "Posts",
       resources: "Resources",
       back: "Back to Blog"
     },
@@ -120,8 +121,8 @@ const translations = {
       search: "Buscar en el blog...",
       popularTags: "Etiquetas Populares",
       noPosts: "No se encontraron publicaciones que coincidan con tus criterios.",
-      allPosts: "Todos",
-      tutorials: "Tutoriales",
+      allPosts: "All",
+      tutorials: "Post",
       resources: "Recursos",
       back: "Volver al Blog"
     },
@@ -455,14 +456,14 @@ const HomeView = ({ onProjectClick, lang }: { onProjectClick: (p: Project) => vo
 
 const BlogView = ({ lang }: { lang: 'en' | 'es' }) => {
   const [searchQuery, setSearchQuery] = useState('');
-  const [activeCategory, setActiveCategory] = useState('All Posts');
+  const [activeCategory, setActiveCategory] = useState('All');
   const [selectedPost, setSelectedPost] = useState<BlogPost | null>(null);
   const t = translations[lang].blog;
 
   const filteredPosts = BLOG_POSTS.filter(post => {
     const matchesSearch = post.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
                           post.excerpt.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesCategory = activeCategory === 'All Posts' || post.category === activeCategory;
+    const matchesCategory = activeCategory === 'All' || post.category === activeCategory;
     return matchesSearch && matchesCategory;
   });
 
@@ -471,7 +472,10 @@ const BlogView = ({ lang }: { lang: 'en' | 'es' }) => {
       <motion.div 
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
-        className="mx-auto max-w-3xl py-12"
+        className={cn(
+          "mx-auto py-12",
+          selectedPost.layout ? "max-w-6xl" : "max-w-3xl"
+        )}
       >
         <button 
           onClick={() => setSelectedPost(null)}
@@ -480,17 +484,29 @@ const BlogView = ({ lang }: { lang: 'en' | 'es' }) => {
           <ChevronLeft className="h-4 w-4" />
           {t.back}
         </button>
-        <div className="flex items-center gap-3 text-xs font-bold uppercase tracking-widest mb-4">
-          <span className={cn(
-            "px-2 py-1 rounded",
-            selectedPost.category === 'Tutorial' ? "text-primary bg-primary/10" : "text-amber-500 bg-amber-500/10"
-          )}>{selectedPost.category}</span>
-          <span className="text-slate-400 dark:text-slate-500">{selectedPost.date}</span>
-        </div>
-        <h1 className="text-4xl font-black text-slate-900 dark:text-white tracking-tight mb-8 leading-tight">{selectedPost.title}</h1>
-        <div className="markdown-body dark:text-slate-300">
-          <Markdown>{selectedPost.content}</Markdown>
-        </div>
+
+        {selectedPost.layout ? (
+          <div className="w-full">
+            {selectedPost.layout === 'dax' && <DaxLayout />}
+            {selectedPost.layout === 'tableau' && <TableauLayout />}
+            {selectedPost.layout === 'lod' && <LODLayout />}
+            {selectedPost.layout === 'filters' && <FiltersLayout />}
+          </div>
+        ) : (
+          <>
+            <div className="flex items-center gap-3 text-xs font-bold uppercase tracking-widest mb-4">
+              <span className={cn(
+                "px-2 py-1 rounded",
+                selectedPost.category === 'Post' ? "text-primary bg-primary/10" : "text-amber-500 bg-amber-500/10"
+              )}>{selectedPost.category}</span>
+              <span className="text-slate-400 dark:text-slate-500">{selectedPost.date}</span>
+            </div>
+            <h1 className="text-4xl font-black text-slate-900 dark:text-white tracking-tight mb-8 leading-tight">{selectedPost.title}</h1>
+            <div className="markdown-body dark:text-slate-300">
+              <Markdown>{selectedPost.content}</Markdown>
+            </div>
+          </>
+        )}
       </motion.div>
     );
   }
@@ -505,7 +521,7 @@ const BlogView = ({ lang }: { lang: 'en' | 'es' }) => {
 
         <div className="border-b border-slate-200 dark:border-slate-800">
           <div className="flex gap-8">
-            {['All Posts', 'Tutorials', 'Resources'].map(cat => (
+            {['All', 'Post', 'Resources'].map(cat => (
               <button 
                 key={cat}
                 onClick={() => setActiveCategory(cat)}
@@ -514,7 +530,7 @@ const BlogView = ({ lang }: { lang: 'en' | 'es' }) => {
                   activeCategory === cat ? "text-slate-900 dark:text-white border-b-2 border-primary" : "text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200"
                 )}
               >
-                {cat === 'All Posts' ? t.allPosts : cat === 'Tutorials' ? t.tutorials : t.resources}
+                {cat === 'All' ? t.allPosts : cat === 'Post' ? t.tutorials : t.resources}
               </button>
             ))}
           </div>
@@ -533,7 +549,7 @@ const BlogView = ({ lang }: { lang: 'en' | 'es' }) => {
                 <div className="flex items-center gap-3 text-xs font-bold uppercase tracking-widest">
                   <span className={cn(
                     "px-2 py-1 rounded",
-                    post.category === 'Tutorial' ? "text-primary bg-primary/10" : "text-amber-500 bg-amber-500/10"
+                    post.category === 'Post' ? "text-primary bg-primary/10" : "text-amber-500 bg-amber-500/10"
                   )}>{post.category}</span>
                   <span className="text-slate-400 dark:text-slate-500">{post.date}</span>
                 </div>
@@ -568,7 +584,7 @@ const BlogView = ({ lang }: { lang: 'en' | 'es' }) => {
         <div className="flex flex-col gap-4">
           <h4 className="text-sm font-bold uppercase tracking-widest text-slate-400 dark:text-slate-500">{t.popularTags}</h4>
           <div className="flex flex-wrap gap-2">
-            {['Pandas', 'Data Viz', 'SQL', 'Python', 'Statistics'].map(tag => (
+            {['Tableau', 'Power BI', 'Python', 'DAX', 'Cheat Sheet'].map(tag => (
               <button key={tag} className="rounded-lg bg-slate-100 dark:bg-slate-800 px-3 py-1.5 text-xs font-semibold text-slate-700 dark:text-slate-300 hover:bg-primary/20 hover:text-primary transition-colors">
                 {tag}
               </button>

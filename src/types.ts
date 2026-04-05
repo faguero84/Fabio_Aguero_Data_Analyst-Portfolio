@@ -43,8 +43,9 @@ export interface BlogPost {
   excerpt: string;
   content: string;
   date: string;
-  category: 'Tutorial' | 'Resources';
+  category: 'Post' | 'Resources';
   tags: string[];
+  layout?: 'dax' | 'python' | 'tableau' | 'lod' | 'filters';
 }
 
 export const PROJECTS: Project[] = [
@@ -166,98 +167,69 @@ END AS precio_por_m2`,
 
 export const BLOG_POSTS: BlogPost[] = [
   {
-    id: 'window-functions',
-    title: 'Mastering Advanced Window Functions in PostgreSQL',
-    excerpt: 'Window functions are one of the most powerful features in SQL. In this tutorial, we dive deep into LAG, LEAD, and OVER clauses to perform complex time-series analysis with ease.',
-    content: `
-Window functions are one of the most powerful features in SQL. They allow you to perform calculations across a set of table rows that are somehow related to the current row.
-
-### Why use Window Functions?
-Unlike regular aggregate functions, window functions do not cause rows to become grouped into a single output row. The rows retain their separate identities.
-
-### Key Functions
-- **LAG()**: Access data from a previous row.
-- **LEAD()**: Access data from a subsequent row.
-- **RANK()**: Assign a rank to each row within a partition.
-
-### Example
-\`\`\`sql
-SELECT 
-    date, 
-    sales,
-    LAG(sales) OVER (ORDER BY date) as prev_day_sales
-FROM daily_sales;
-\`\`\`
-    `,
-    date: 'October 24, 2023',
-    category: 'Tutorial',
-    tags: ['SQL', 'PostgreSQL']
+    id: 'tableau-filters-cheat-sheet',
+    title: 'Tableau Filters',
+    excerpt: 'Entendé el orden de operaciones de los filtros, sus diferencias clave y cuándo aplicar cada tipo para obtener exactamente el resultado que buscás.',
+    content: ``,
+    date: 'April 5, 2026',
+    category: 'Post',
+    tags: ['Tableau', 'Filters', 'Cheat Sheet'],
+    layout: 'filters'
   },
   {
-    id: 'geospatial-dashboards',
-    title: 'Python Libraries for Dynamic Geospatial Dashboards',
-    excerpt: 'A curated selection of the best Python libraries for mapping and visualization, focusing on Streamlit and Plotly Express for logistics data.',
+    id: 'tableau-ecosystem',
+    title: 'The Tableau ecosystem explained end to end',
+    excerpt: 'A complete guide to the tools, infrastructure flows, and architecture decisions of the Tableau stack — from Prep all the way to Cloud.',
     content: `
-Geospatial data visualization is crucial for logistics and urban planning. Python offers a rich ecosystem for this.
+### The ecosystem tools
+- **Tableau Prep Builder**: Visual ETL — data cleaning, transformation, and combining sources.
+- **Tableau Desktop**: Creating visualizations, dashboards, and exploratory analysis.
+- **Tableau Server**: On-premise platform for publishing, sharing, and governing content.
+- **Tableau Cloud**: Salesforce-hosted SaaS version. No infrastructure to manage.
+- **Tableau Bridge**: Agent that connects Tableau Cloud to local or private data sources.
+- **Tableau Public**: Free platform for sharing vizs publicly. Ideal for portfolios.
 
-### Top Libraries
-1. **Plotly Express**: Great for interactive maps with minimal code.
-2. **Folium**: Built on Leaflet.js, perfect for complex map overlays.
-3. **Streamlit**: The easiest way to turn scripts into shareable web apps.
+### Infrastructure flows
+1. **Classic local analysis**: Local DB -> Prep -> Desktop -> .twbx.
+2. **Publishing to Tableau Server**: DW -> Prep -> Desktop -> Server.
+3. **Tableau Cloud with cloud data**: Snowflake/BQ -> Desktop -> Cloud.
+4. **Tableau Cloud + Bridge**: Local DB -> Bridge -> Cloud.
 
-### Use Case: Logistics
-Visualizing delivery routes and warehouse locations can reveal significant inefficiencies in supply chain management.
+### Tableau Data Management
+Enterprise add-on that layers governance, traceability, and centralized data management.
+- **Tableau Catalog**: Data discovery and lineage.
+- **Prep Conductor**: Flow orchestration.
+- **Virtual Connections**: Centralized data abstraction.
+
+### Advanced features
+- **Tableau Pulse**: AI-powered metrics experience.
+- **Einstein Discovery**: Automated ML engine.
+- **TabPy / Rserve**: Python and R integration for advanced analytics.
+- **Viz Extensions**: Custom chart types (D3.js, Vega-Lite).
     `,
-    date: 'October 12, 2023',
+    date: 'April 4, 2026',
+    category: 'Post',
+    tags: ['Tableau', 'BI', 'Architecture'],
+    layout: 'tableau'
+  },
+  {
+    id: 'dax-cheat-sheet',
+    title: 'Power BI DAX',
+    excerpt: 'Medidas más usadas en Power BI — con sintaxis y casos de uso.',
+    content: ``,
+    date: 'April 4, 2026',
     category: 'Resources',
-    tags: ['Python', 'GIS']
+    tags: ['Power BI', 'DAX', 'Cheat Sheet'],
+    layout: 'dax'
   },
   {
-    id: 'public-datasets',
-    title: 'My Curated List of Public Datasets for ML Practice',
-    excerpt: 'Finding good data is half the battle. Here are 25+ high-quality, clean datasets across various domains like finance, health, and urban planning.',
-    content: `
-Finding high-quality data is often the most time-consuming part of a data science project. Here are my top picks:
-
-### Finance
-- **Yahoo Finance API**: Historical stock prices.
-- **LendingClub Dataset**: Peer-to-peer lending data.
-
-### Health
-- **UCI Machine Learning Repository**: Heart disease, diabetes datasets.
-- **Kaggle COVID-19 Open Research Dataset**.
-
-### Urban Planning
-- **NYC Open Data**: Taxi trips, tree census.
-- **London Datastore**: Transport and housing data.
-    `,
-    date: 'September 28, 2023',
+    id: 'tableau-lod-cheat-sheet',
+    title: 'Tableau LOD Expressions',
+    excerpt: 'Computá agregaciones fuera del nivel de detalle de la visualización. Los LODs son uno de los features más poderosos de Tableau.',
+    content: ``,
+    date: 'April 5, 2026',
     category: 'Resources',
-    tags: ['ML', 'Datasets']
-  },
-  {
-    id: 'matplotlib-styles',
-    title: 'Customizing Matplotlib Styles for Professional Reports',
-    excerpt: 'Learn how to create a custom RC profile to make all your Python visualizations brand-compliant and ready for publication.',
-    content: `
-Default Matplotlib plots often look dated. Customizing them is essential for professional reports.
-
-### The RC Params
-You can modify the \`rcParams\` dictionary to set global styles.
-
-\`\`\`python
-import matplotlib.pyplot as plt
-
-plt.rcParams['font.family'] = 'sans-serif'
-plt.rcParams['axes.edgecolor'] = '#333333'
-plt.rcParams['grid.alpha'] = 0.3
-\`\`\`
-
-### Style Sheets
-Alternatively, you can create a \`.mplstyle\` file and load it with \`plt.style.use('path/to/style')\`.
-    `,
-    date: 'September 15, 2023',
-    category: 'Tutorial',
-    tags: ['Python', 'Data Viz']
+    tags: ['Tableau', 'LOD', 'Cheat Sheet'],
+    layout: 'lod'
   }
 ];
