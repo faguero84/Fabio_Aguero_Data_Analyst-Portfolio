@@ -277,7 +277,7 @@ const AnimatedHeroImage = ({ lang }: { lang: 'en' | 'es' }) => {
         >
           <div className="relative h-24 w-24 lg:h-32 lg:w-32 shrink-0 overflow-hidden rounded-full border-4 border-primary shadow-xl ring-8 ring-primary/5">
             <img 
-              src="https://res.cloudinary.com/daaey5zma/image/upload/profile_kky8cg.jpg" 
+              src="https://res.cloudinary.com/daaey5zma/image/upload/q_auto,f_auto,w_800/profile_kky8cg.jpg" 
               alt="Fabio" 
               className="h-full w-full object-cover"
               referrerPolicy="no-referrer"
@@ -1291,8 +1291,8 @@ export default function App() {
       />
       <main className="flex-1 px-6 lg:px-12 max-w-7xl mx-auto w-full relative">
         {/* Subtle Vignette/Focus Overlays */}
-        <div className="fixed inset-x-0 top-0 h-48 bg-gradient-to-b from-background-light dark:from-background-dark via-background-light/80 dark:via-background-dark/80 to-transparent z-40 pointer-events-none opacity-90" />
-        <div className="fixed inset-x-0 bottom-0 h-32 bg-gradient-to-t from-background-light dark:from-background-dark to-transparent z-40 pointer-events-none opacity-70" />
+        <div className="fixed inset-x-0 top-0 h-48 bg-gradient-to-b from-background-light dark:from-background-dark via-background-light/40 dark:via-background-dark/40 to-transparent z-40 pointer-events-none opacity-80" />
+        <div className="fixed inset-x-0 bottom-0 h-32 bg-gradient-to-t from-background-light dark:from-background-dark to-transparent z-40 pointer-events-none opacity-60" />
         
         <AnimatePresence mode="wait">
           <motion.div

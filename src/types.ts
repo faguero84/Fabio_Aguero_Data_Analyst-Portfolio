@@ -151,23 +151,23 @@ export const PROJECTS: Project[] = [
     },
     videos: [
       {
-        url: '/assets/projects/trf/PowerBI_Dashboard_Video.mp4',
+        url: 'https://res.cloudinary.com/daaey5zma/video/upload/v1776364244/PowerBI_Dashboard_Video_pzgdbr.mp4',
         title: 'Power BI Dashboard Demo',
         description: 'Detailed navigation of the Power BI dashboard showing key logistics metrics.'
       },
       {
-        url: '/assets/projects/trf/Python_Dashboard_Video.mp4',
+        url: 'https://res.cloudinary.com/daaey5zma/video/upload/v1776364251/Python_Dashboard_Video_v7g0zg.mp4',
         title: 'Python Dashboard Demo',
         description: 'Interactive dashboard built with Streamlit and Plotly for advanced anomaly detection.'
       }
     ],
     gallery: [
-      { url: '/assets/projects/trf/grafico_01_transportistas.png', description: 'Carrier performance analysis.' },
-      { url: '/assets/projects/trf/grafico_02_zscore.png', description: 'Z-score anomaly detection results.' },
-      { url: '/assets/projects/trf/grafico_03_rubros.png', description: 'Sector-wise revenue and OTD analysis.' },
-      { url: '/assets/projects/trf/grafico_04_tendencia_mensual.png', description: 'Monthly volume and cancellation trends.' },
-      { url: '/assets/projects/trf/grafico_05_heatmap.png', description: 'Heatmap of delivery deviations.' },
-      { url: '/assets/projects/trf/grafico_06_dashboard_resumen.png', description: 'Summary dashboard overview.' }
+      { url: 'https://res.cloudinary.com/daaey5zma/image/upload/v1776364140/grafico_01_transportistas_kunaft.png', description: 'Carrier performance analysis.' },
+      { url: 'https://res.cloudinary.com/daaey5zma/image/upload/v1776364135/grafico_02_zscore_strdjd.png', description: 'Z-score anomaly detection results.' },
+      { url: 'https://res.cloudinary.com/daaey5zma/image/upload/v1776364136/grafico_03_rubros_fahdrg.png', description: 'Sector-wise revenue and OTD analysis.' },
+      { url: 'https://res.cloudinary.com/daaey5zma/image/upload/v1776364136/grafico_04_tendencia_mensual_r7ge6i.png', description: 'Monthly volume and cancellation trends.' },
+      { url: 'https://res.cloudinary.com/daaey5zma/image/upload/v1776364138/grafico_05_heatmap_bjtsxf.png', description: 'Heatmap of delivery deviations.' },
+      { url: 'https://res.cloudinary.com/daaey5zma/image/upload/v1776364139/grafico_06_dashboard_resumen_mj8dmc.png', description: 'Summary dashboard overview.' }
     ]
   },
   {
