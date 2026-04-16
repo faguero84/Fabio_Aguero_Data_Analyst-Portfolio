@@ -20,6 +20,15 @@ export interface Project {
   }[];
   codeSnippet?: string;
   tableauUrl?: string;
+  videos?: {
+    url: string;
+    title: string;
+    description?: string;
+  }[];
+  gallery?: {
+    url: string;
+    description?: string;
+  }[];
   es?: {
     title: string;
     description: string;
@@ -33,6 +42,13 @@ export interface Project {
       label: string;
       value: string;
       subtext: string;
+    }[];
+    videos?: {
+      title: string;
+      description?: string;
+    }[];
+    gallery?: {
+      description?: string;
     }[];
   };
 }
@@ -52,11 +68,11 @@ export const PROJECTS: Project[] = [
   {
     id: 'energy-solar',
     title: 'Home Energy & Solar Insights',
-    description: 'Analyzing residential energy consumption patterns to optimize solar panel placement and ROI.',
+    description: 'A comprehensive analysis of residential energy dynamics, focused on monitoring household consumption patterns and maximizing financial returns from solar investments through data-driven intelligence.',
     fullDescription: 'A comprehensive analysis of residential energy dynamics, focused on monitoring household consumption patterns and maximizing financial returns from solar investments through data-driven intelligence.',
     image: 'https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?auto=format&fit=crop&q=80&w=1000',
-    tags: ['Tableau', 'SQL'],
-    tools: ['Tableau', 'Excel', 'SQL'],
+    tags: ['Tableau', 'SQL', 'Excel'],
+    tools: ['Tableau', 'SQL', 'Excel'],
     role: 'BI Analyst',
     date: '2024',
     sector: 'Renewable Energy',
@@ -82,6 +98,77 @@ export const PROJECTS: Project[] = [
         { label: 'ROI Solar', value: '4.5 años', subtext: 'Período de recuperación logrado maximizando el autoconsumo frente a la exportación a la red.' }
       ]
     }
+  },
+  {
+    id: 'TRF Analytics',
+    title: 'Logistic Operation Performance',
+    description: 'An end-to-end analysis of operations for a multi-industry logistics operator, using realistic simulated data. Identifying operational inefficiencies, predicting deviations, and proposing concrete actions.',
+    fullDescription: 'An end-to-end analysis of operations for a multi-industry logistics operator, using realistic simulated data. Identifying operational inefficiencies, predicting deviations, and proposing concrete actions.',
+    image: 'https://images.unsplash.com/photo-1565891741441-64926e441838?q=80&w=1171&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    tags: ['Python', 'SQL', 'Excel', 'Power BI'],
+    tools: ['Python', 'SQLite', 'Excel', 'Power BI'],
+    role: 'BI Analyst',
+    date: '2026',
+    sector: 'Logistic',
+    challenge: 'Design an end-to-end analytical pipeline for a multi-sector logistics operator, identifying operational inefficiencies, delivery deviation patterns, and improvement opportunities in carrier performance.',
+      processing: 'Dataset generation with Python (Faker + pandas), storage in SQLite, analytical queries with SQL (JOINs, CASE WHEN, subqueries), anomaly detection using Z-score in Python, dynamic tables in Excel with conditional formatting, and visualization in Power BI with DAX measures, Slicers and custom tooltips. Additional interactive dashboard built with Streamlit + Plotly.',
+    insights: 'Pharmaceutical sector concentrates the highest revenue but the lowest OTD (54%) and 22 critical incidents. Ruta Pampeana leads in deviations with a group Z-score of 1.30. December shows the operational peak with highest volume and cancellation rate. TransNorte SA is the only carrier in the optimal zone with 70.1% OTD.',
+    metrics: [
+        { label: 'OTD', value: '61.9 %', subtext: 'Orders shipped on time.'},
+        { label: 'Mean Deviation', value: '0.47 d', subtext: 'Avg. delivery delay (days)', primary: true}
+    ],
+    es: {
+      title: 'Análisis de Performance Operativa',
+      description: 'Un análisis de principio a fin de operaciones de un operador logístico multi-rubro, con datos simulados realistas. El objetivo es detectar ineficiencias operativas, predecir desvíos y proponer acciones concretas.',
+      fullDescription: 'Un análisis de principio a fin de operaciones de un operador logístico multi-rubro, con datos simulados realistas. El objetivo es detectar ineficiencias operativas, predecir desvíos y proponer acciones concretas.',
+      role: 'Analista de BI',
+      sector: 'Logística',
+      challenge:  'Diseñar un pipeline analítico end-to-end para un operador logístico multi-rubro, identificando ineficiencias operativas, patrones de desvío en entregas y oportunidades de mejora en la performance de transportistas.',
+      processing: 'Generación del dataset con Python (Faker + pandas), almacenamiento en SQLite, consultas analíticas con SQL (JOINs, CASE WHEN, subqueries), detección de anomalías con Z-score en Python, tablas dinámicas en Excel con formato condicional, y visualización en Power BI con medidas DAX, Slicers y tooltips personalizados. Dashboard interactivo adicional con Streamlit + Plotly.',
+      insights: 'Farmacéutica concentra el mayor revenue pero el OTD más bajo (54%) y 22 incidentes críticos. Ruta Pampeana lidera los desvíos con Z-score grupal de 1.30. Diciembre registra el pico operativo con mayor volumen y tasa de cancelación. TransNorte SA es el único transportista en zona óptima con 70.1% de OTD.',
+      metrics: [
+        { label: 'OTD', value: '61.9 %', subtext: 'Porcentaje de órdenes entregadas en tiempo.'},
+        { label: 'Desvío Promedio', value: '0.47 d', subtext: 'Promedio de dias de demora.'}
+      ],
+      videos: [
+        {
+          title: 'Power BI Dashboard Demo',
+          description: 'Navegación detallada del dashboard de Power BI mostrando métricas clave de logística.'
+        },
+        {
+          title: 'Python Dashboard Demo',
+          description: 'Dashboard interactivo construido con Streamlit y Plotly para detección avanzada de anomalías.'
+        }
+      ],
+      gallery: [
+        { description: 'Análisis de performance de transportistas.' },
+        { description: 'Resultados de detección de anomalías mediante Z-score.' },
+        { description: 'Análisis de ingresos y OTD por rubro.' },
+        { description: 'Tendencias mensuales de volumen y cancelaciones.' },
+        { description: 'Mapa de calor de desvíos en entregas.' },
+        { description: 'Vista general del dashboard de resumen.' }
+      ]
+    },
+    videos: [
+      {
+        url: '/assets/projects/trf/PowerBI_Dashboard_Video.mp4',
+        title: 'Power BI Dashboard Demo',
+        description: 'Detailed navigation of the Power BI dashboard showing key logistics metrics.'
+      },
+      {
+        url: '/assets/projects/trf/Python_Dashboard_Video.mp4',
+        title: 'Python Dashboard Demo',
+        description: 'Interactive dashboard built with Streamlit and Plotly for advanced anomaly detection.'
+      }
+    ],
+    gallery: [
+      { url: '/assets/projects/trf/grafico_01_transportistas.png', description: 'Carrier performance analysis.' },
+      { url: '/assets/projects/trf/grafico_02_zscore.png', description: 'Z-score anomaly detection results.' },
+      { url: '/assets/projects/trf/grafico_03_rubros.png', description: 'Sector-wise revenue and OTD analysis.' },
+      { url: '/assets/projects/trf/grafico_04_tendencia_mensual.png', description: 'Monthly volume and cancellation trends.' },
+      { url: '/assets/projects/trf/grafico_05_heatmap.png', description: 'Heatmap of delivery deviations.' },
+      { url: '/assets/projects/trf/grafico_06_dashboard_resumen.png', description: 'Summary dashboard overview.' }
+    ]
   },
   {
     id: 'real-estate',
@@ -140,7 +227,7 @@ END AS precio_por_m2`,
     role: 'BI Data Analyst',
     date: '2022',
     sector: 'Sports/ Tournament Insights',
-    challenge: 'Improving Insights & Accuracy. The primary challenge was to distill over dense statistical data into meaningful narratives. In a tournament defined by high-stakes upsets and tactical evolutions this aim to explain the underlying competitive patterns.',
+    challenge: 'The primary challenge was to distill over dense statistical data into meaningful narratives. In a tournament defined by high-stakes upsets and tactical evolutions this aim to explain the underlying competitive patterns.',
     processing: 'Data was aggregated from multiple feeds. Exploratory Data Analysis (EDA) focused on cleansing match event logs, normalizing tracking data, and calculating custom metrics.',
     insights: 'The analysis revealed that clinical finishing outweighed raw possession. Teams that prioritized rapid transitions and high-value shot creation consistently outperformed those with high volume but low-quality attempts. Spain dominated the ball at 75.8% yet was eliminated in the Round of 16, while Argentina won the championship with 57.4% — prioritizing efficiency over control.',
     metrics: [
@@ -154,7 +241,7 @@ END AS precio_por_m2`,
       fullDescription: 'Una inmersión profunda en la dinámica del torneo, descubriendo tendencias en las estadísticas de los partidos y patrones competitivos a través de la visualización de datos.',
       role: 'Analista de Datos BI',
       sector: 'Deportes / Perspectivas del Torneo',
-      challenge: 'Mejorando Perspectivas y Precisión. El desafío principal fue destilar datos estadísticos densos en narrativas significativas. En un torneo definido por sorpresas de alto riesgo y evoluciones tácticas, esto busca explicar los patrones competitivos subyacentes.',
+      challenge: 'El desafío principal fue destilar datos estadísticos densos en narrativas significativas. En un torneo definido por sorpresas de alto riesgo y evoluciones tácticas, esto busca explicar los patrones competitivos subyacentes.',
       processing: 'Los datos se agregaron de múltiples fuentes. El Análisis Exploratorio de Datos (EDA) se centró en la limpieza de los registros de eventos de los partidos, la normalización de los datos de seguimiento y el cálculo de métricas personalizadas.',
       insights: 'El análisis reveló que la finalización clínica superó a la posesión bruta. Los equipos que priorizaron las transiciones rápidas y la creación de tiros de alto valor superaron consistentemente a aquellos con un alto volumen pero intentos de baja calidad. España dominó el balón con un 75.8% pero fue eliminada en octavos de final, mientras que Argentina ganó el campeonato con un 57.4%, priorizando la eficiencia sobre el control.',
       metrics: [

@@ -31,7 +31,9 @@ import {
   Menu,
   X,
   Sun,
-  Moon
+  Moon,
+  Play,
+  Image as ImageIcon
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import Markdown from 'react-markdown';
@@ -96,7 +98,14 @@ const translations = {
       improvingInsights: "Improving Insights & Accuracy",
       tableauDashboard: "Interactive Tableau Dashboard",
       viewTableau: "View on Tableau Public",
-      tableauInstruction: "Click above to explore the full interactive visualization"
+      tableauInstruction: "Click above to explore the full interactive visualization",
+      videoDemo: "Project Demo",
+      gallery: "Project Gallery"
+    },
+    heroChart: {
+      yAxis: "Insight Quality",
+      xAxis: "Data Complexity",
+      quote: "The more complex the data, the better my ability to generate insights"
     }
   },
   es: {
@@ -106,6 +115,11 @@ const translations = {
       subtitle: "Transformo datos en decisiones estratégicas.",
       description: "Transformo hallazgos técnicos complejos en narrativas claras, accionables y convincentes. Me especializo en visualización de datos de alto impacto y narración estadística.",
       location: "Buenos Aires, Argentina"
+    },
+    heroChart: {
+      yAxis: "Calidad de Insights",
+      xAxis: "Complejidad de Datos",
+      quote: "Cuanto más complejos son los datos, mejor es mi capacidad para generar insights"
     },
     journey: { title: "Mi Trayectoria" },
     projects: {
@@ -153,12 +167,139 @@ const translations = {
       improvingInsights: "Mejorando Perspectivas y Precisión",
       tableauDashboard: "Tablero Interactivo de Tableau",
       viewTableau: "Ver en Tableau Public",
-      tableauInstruction: "Haz clic arriba para explorar la visualización interactiva completa"
+      tableauInstruction: "Haz clic arriba para explorar la visualización interactiva completa",
+      videoDemo: "Demo del Proyecto",
+      gallery: "Galería del Proyecto"
     }
   }
 };
 
 // --- Components ---
+
+const AnimatedHeroImage = ({ lang }: { lang: 'en' | 'es' }) => {
+  const t = translations[lang].heroChart;
+  
+  return (
+    <div className="relative w-full aspect-square max-w-[450px] mx-auto md:mx-0 mb-12 md:mb-0">
+      {/* Chart Area */}
+      <div className="relative w-full h-full bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800 shadow-xl overflow-hidden p-8">
+        {/* SVG Elements (Axes, Curve, Reference Line) */}
+        <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 400 400">
+          {/* Grid Lines */}
+          <line x1="60" y1="60" x2="60" y2="340" stroke="currentColor" strokeOpacity="0.1" className="text-slate-400" strokeWidth="2" />
+          <line x1="60" y1="340" x2="340" y2="340" stroke="currentColor" strokeOpacity="0.1" className="text-slate-400" strokeWidth="2" />
+          
+          {/* Reference Line */}
+          <motion.line 
+            initial={{ pathLength: 0 }}
+            animate={{ pathLength: 1 }}
+            transition={{ duration: 1.5, ease: "easeInOut" }}
+            x1="60" y1="340" x2="340" y2="60" stroke="currentColor" strokeDasharray="4 4" className="text-primary/30" strokeWidth="2" 
+          />
+
+          {/* Bezier Data Curve */}
+          <motion.path 
+            initial={{ pathLength: 0 }}
+            animate={{ pathLength: 1 }}
+            transition={{ duration: 2, ease: "easeInOut", delay: 0.5 }}
+            d="M 60 340 Q 150 330 200 200 T 340 70" 
+            fill="none" 
+            stroke="currentColor" 
+            className="text-primary" 
+            strokeWidth="3" 
+          />
+
+          {/* Labels */}
+          <text 
+            x="0" y="0" 
+            transform="translate(45, 200) rotate(-90)" 
+            className="text-[10px] font-bold fill-slate-400 uppercase tracking-widest"
+          >
+            {t.yAxis}
+          </text>
+          <text 
+            x="200" y="375" 
+            textAnchor="middle"
+            className="text-[10px] font-bold fill-slate-400 uppercase tracking-widest"
+          >
+            {t.xAxis}
+          </text>
+        </svg>
+
+        {/* Small Data Points */}
+        {[
+          { x: '20%', y: '80%', size: 12, delay: 1.2 },
+          { x: '35%', y: '65%', size: 16, delay: 1.3 },
+          { x: '50%', y: '45%', size: 14, delay: 1.4 },
+          { x: '65%', y: '30%', size: 18, delay: 1.5 },
+          { x: '85%', y: '20%', size: 15, delay: 1.6 },
+        ].map((dot, i) => (
+          <motion.div
+            key={i}
+            initial={{ opacity: 0, scale: 0 }}
+            animate={{ opacity: 0.6, scale: 1 }}
+            transition={{ delay: dot.delay, type: "spring" }}
+            className="absolute rounded-full bg-primary/20 border border-primary/40"
+            style={{ 
+              left: dot.x, 
+              top: dot.y, 
+              width: dot.size, 
+              height: dot.size,
+              transform: 'translate(-50%, -50%)' 
+            }}
+          />
+        ))}
+
+        {/* Profile Image (The Main Data Point) */}
+        <motion.div 
+          initial={{ 
+            opacity: 0, 
+            scale: 2, 
+            left: "50%", 
+            top: "50%", 
+            x: "-50%", 
+            y: "-50%" 
+          }}
+          animate={{ 
+            opacity: 1, 
+            scale: 1, 
+            left: "80%", 
+            top: "20%", 
+            x: "-50%", 
+            y: "-50%" 
+          }}
+          transition={{ 
+            duration: 2.5, 
+            ease: "circOut",
+            opacity: { duration: 1 }
+          }}
+          className="absolute z-20"
+        >
+          <div className="relative h-24 w-24 lg:h-32 lg:w-32 shrink-0 overflow-hidden rounded-full border-4 border-primary shadow-xl ring-8 ring-primary/5">
+            <img 
+              src="https://res.cloudinary.com/daaey5zma/image/upload/profile_kky8cg.jpg" 
+              alt="Fabio" 
+              className="h-full w-full object-cover"
+              referrerPolicy="no-referrer"
+            />
+          </div>
+        </motion.div>
+      </div>
+
+      {/* Legend / Quote at Footer */}
+      <motion.div 
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 1.5, duration: 0.8 }}
+        className="absolute -bottom-16 left-0 right-0 text-center"
+      >
+        <p className="text-sm font-medium italic text-slate-500 dark:text-slate-400">
+          "{t.quote}"
+        </p>
+      </motion.div>
+    </div>
+  );
+};
 
 const Navbar = ({ activeTab, setActiveTab, isDarkMode, toggleDarkMode, lang, setLang }: { 
   activeTab: string, 
@@ -296,26 +437,17 @@ const Footer = ({ setActiveTab }: { setActiveTab: (tab: string) => void }) => (
 
 // --- Views ---
 
-const HomeView = ({ onProjectClick, lang }: { onProjectClick: (p: Project) => void, lang: 'en' | 'es' }) => {
+const HomeView = ({ onProjectClick, lang, isDarkMode }: { 
+  onProjectClick: (p: Project) => void, 
+  lang: 'en' | 'es',
+  isDarkMode: boolean 
+}) => {
   const t = translations[lang];
   return (
     <div className="space-y-24 pb-24">
       {/* Hero Section */}
-      <section className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-16 mt-12 md:mt-24 items-center max-w-6xl mx-auto">
-        <motion.div 
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          className="flex justify-center md:justify-end"
-        >
-          <div className="relative h-[300px] w-[300px] lg:h-[360px] lg:w-[360px] shrink-0 overflow-hidden rounded-full border-[12px] border-slate-50 dark:border-slate-800/50 shadow-sm">
-            <img 
-              src="/profile.jpg" 
-              alt="Fabio" 
-              className="h-full w-full object-cover"
-              referrerPolicy="no-referrer"
-            />
-          </div>
-        </motion.div>
+      <section className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-24 mt-20 md:mt-32 items-center max-w-6xl mx-auto">
+        <AnimatedHeroImage lang={lang} />
         <motion.div 
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
@@ -361,34 +493,61 @@ const HomeView = ({ onProjectClick, lang }: { onProjectClick: (p: Project) => vo
         </div>
         <div className="relative timeline-line mx-auto max-w-5xl px-4">
           {[
-            { year: '2016 - Present', title: 'BI & Data Analyst', desc: lang === 'en' ? 'Developing end-to-end BI solutions for top-tier clients including Bagó, Garrahan, Itaú, Cordial y Electrolux. Focused on dashboarding, data storytelling, and automated reporting systems.' : 'Desarrollo de soluciones de BI para clientes de primer nivel, incluidos Bagó, Garrahan, Itaú, Cordial y Electrolux. Enfocado en tableros, narración de datos y sistemas de informes automatizados.', icon: BarChart2, active: true },
+            { year: '2016 - Present', title: 'BI & Data Analyst', desc: lang === 'en' ? 'Developing end-to-end BI solutions for top-tier clients including Bagó, Garrahan, Itaú, Cordial y Electrolux. Focused on dashboarding, data storytelling, and automated reporting systems.' : 'Desarrollo de soluciones de BI para clientes de primer nivel, incluidos Bagó, Garrahan, Itaú, Cordial y Electrolux. Enfocado en tableros, narración de datos y sistemas de informes automatizados.', icon: BarChart2 },
             { year: '2012 - 2016', title: 'IT Systems & Infrastucture Administrator', desc: lang === 'en' ? 'Overseeing infrastructure operations and ensuring system reliability while optimizing IT workflows for organizational efficiency.' : 'Supervisión de las operaciones de infraestructura y garantía de la confiabilidad del sistema mientras se optimizan los flujos de trabajo de TI para la eficiencia organizacional.', icon: Settings2 },
             { year: '2011 - 2012', title: 'Data Warehouse Systems Analyst', desc: lang === 'en' ? 'Data Warehouse operations and data processing focused on quality control, and large-volume data management. Big Data, Teradata, SFTP, SQL DB2, Mainframe' : 'Operaciones de Data Warehouse y procesamiento de datos con foco en control de calidad y gestión de grandes volúmenes de información. Big Data, Teradata, SFTP, SQL DB2, Mainframe.', icon: HardDrive },
             { year: '2009 - 2011', title: 'System Analyst', desc: lang === 'en' ? 'Graduated as a System Analyst, Information Technology' : 'Graduado como Analista de Sistemas, Tecnologías de la Información', icon: GraduationCap },
-          ].map((item, idx) => (
-            <motion.div 
-              key={idx}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="relative mb-12 flex w-full items-center justify-between group"
-            >
-              <div className={cn("order-1 w-5/12", idx % 2 === 0 ? "text-right pr-8" : "order-2 text-left pl-8")}>
-                <span className={cn("text-sm font-bold uppercase tracking-widest", item.active ? "text-primary" : "text-slate-400")}>{item.year}</span>
-                <h3 className="mt-2 text-xl font-bold">{item.title}</h3>
-                <p className="mt-3 text-sm text-slate-600 dark:text-slate-400 leading-relaxed">{item.desc}</p>
-              </div>
-              <div className="z-10 order-1 flex h-12 w-12 items-center justify-center rounded-full shadow-lg ring-8 ring-white dark:ring-background-dark transition-transform group-hover:scale-110 absolute left-1/2 -translate-x-1/2">
-                <div className={cn(
-                  "flex h-full w-full items-center justify-center rounded-full",
-                  item.active ? "bg-primary text-white" : "bg-slate-100 dark:bg-slate-800 text-slate-500"
-                )}>
-                  <item.icon className="h-5 w-5" />
+          ].map((item, idx) => {
+            return (
+              <motion.div 
+                key={idx}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                className="relative mb-16 flex w-full items-center justify-between group"
+              >
+                {/* Information Card */}
+                <motion.div 
+                  className={cn(
+                    "order-1 w-5/12 p-6 rounded-2xl transition-all duration-300 border border-transparent",
+                    "group-hover:border-primary/10 group-hover:shadow-[0_0_40px_rgba(59,130,246,0.05)]",
+                    isDarkMode 
+                      ? "group-hover:bg-slate-800/40" 
+                      : "group-hover:bg-slate-50/80",
+                    idx % 2 === 0 ? "text-right pr-8" : "order-2 text-left pl-8"
+                  )}
+                >
+                  <span className={cn("text-xs font-black uppercase tracking-[0.2em] transition-colors group-hover:text-primary text-slate-400")}>{item.year}</span>
+                  <h3 className="mt-2 text-xl font-black text-slate-900 dark:text-white transition-colors group-hover:text-primary">{item.title}</h3>
+                  <p className="mt-3 text-sm text-slate-600 dark:text-slate-400 leading-relaxed font-medium">{item.desc}</p>
+                </motion.div>
+
+                {/* Central Circle (Icon) */}
+                <div className="z-10 order-1 absolute left-1/2 -translate-x-1/2 flex h-14 w-14 items-center justify-center pointer-events-none">
+                  <motion.div 
+                    whileHover={{ 
+                      scale: 1.25,
+                      rotate: [0, -10, 10, 0],
+                      x: idx % 2 === 0 ? 10 : -10, 
+                    }}
+                    transition={{ 
+                      rotate: { duration: 0.5, ease: "easeInOut" },
+                      default: { type: "spring", stiffness: 300, damping: 15 }
+                    }}
+                    className={cn(
+                      "flex h-12 w-12 items-center justify-center rounded-full shadow-lg ring-8 pointer-events-auto cursor-pointer transition-all duration-300",
+                      "ring-background-light dark:ring-background-dark group-hover:shadow-[0_0_30px_rgba(59,130,246,0.4)]",
+                      "bg-slate-100 dark:bg-slate-800 text-slate-500 group-hover:bg-primary group-hover:text-white"
+                    )}
+                  >
+                    <item.icon className="h-5 w-5" />
+                  </motion.div>
                 </div>
-              </div>
-              <div className={cn("order-1 w-5/12", idx % 2 === 0 ? "order-2" : "")}></div>
-            </motion.div>
-          ))}
+
+                <div className={cn("order-1 w-5/12", idx % 2 === 0 ? "order-2" : "")}></div>
+              </motion.div>
+            );
+          })}
         </div>
       </section>
 
@@ -735,7 +894,9 @@ const ProjectDetailView = ({ project, onBack, onProjectClick, lang }: { project:
     challenge: project.es.challenge,
     processing: project.es.processing,
     insights: project.es.insights,
-    metrics: project.es.metrics
+    metrics: project.es.metrics,
+    videos: project.es.videos,
+    gallery: project.es.gallery
   } : {
     title: project.title,
     description: project.description,
@@ -745,7 +906,9 @@ const ProjectDetailView = ({ project, onBack, onProjectClick, lang }: { project:
     challenge: project.challenge,
     processing: project.processing,
     insights: project.insights,
-    metrics: project.metrics
+    metrics: project.metrics,
+    videos: project.videos,
+    gallery: project.gallery
   };
 
   return (
@@ -771,7 +934,11 @@ const ProjectDetailView = ({ project, onBack, onProjectClick, lang }: { project:
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 py-8 border-y border-slate-100 dark:border-slate-800">
           <div>
             <p className="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-1">{t.tools}</p>
-            <p className="font-bold">{project.tools.join(', ')}</p>
+            <div className="flex flex-col gap-1">
+              {project.tools.map(tool => (
+                <p key={tool} className="font-bold">{tool}</p>
+              ))}
+            </div>
           </div>
           <div>
             <p className="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-1">{t.role}</p>
@@ -861,6 +1028,40 @@ const ProjectDetailView = ({ project, onBack, onProjectClick, lang }: { project:
                   </p>
                 </div>
               </div>
+            ) : project.videos && project.videos.length > 0 ? (
+              <div className="space-y-8">
+                {project.videos.map((video, index) => (
+                  <div key={index} className="bg-slate-50 dark:bg-slate-900 p-8 rounded-2xl border border-slate-100 dark:border-slate-800">
+                    <div className="flex flex-col items-center gap-6">
+                      <div className="flex items-center gap-3 text-primary">
+                        <Play className="h-8 w-8" />
+                        <span className="text-xl font-bold">{projectData.videos?.[index]?.title || video.title}</span>
+                      </div>
+                      <div className="w-full aspect-video rounded-xl overflow-hidden shadow-lg bg-black">
+                        {video.url.includes('youtube.com') || video.url.includes('youtu.be') ? (
+                          <iframe
+                            src={video.url.replace('watch?v=', 'embed/').split('&')[0]}
+                            className="w-full h-full"
+                            allowFullScreen
+                            title={projectData.videos?.[index]?.title || video.title}
+                          />
+                        ) : (
+                          <video 
+                            src={video.url} 
+                            controls 
+                            className="w-full h-full"
+                          />
+                        )}
+                      </div>
+                      {projectData.videos?.[index]?.description && (
+                        <p className="text-sm text-slate-500 dark:text-slate-400 text-center max-w-2xl">
+                          {projectData.videos[index].description}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
             ) : (
               <div className="bg-slate-50 dark:bg-slate-900 p-8 rounded-2xl border border-slate-100 dark:border-slate-800">
                 <img 
@@ -870,6 +1071,34 @@ const ProjectDetailView = ({ project, onBack, onProjectClick, lang }: { project:
                   referrerPolicy="no-referrer"
                 />
                 <p className="mt-4 text-center text-xs font-bold text-slate-400 uppercase tracking-widest">Workflow: Feature selection and normalization pipeline</p>
+              </div>
+            )}
+
+            {project.gallery && project.gallery.length > 0 && (
+              <div className="mt-12">
+                <h4 className="text-sm font-black uppercase tracking-[0.2em] text-slate-400 mb-6 flex items-center gap-2">
+                  <ImageIcon className="h-4 w-4" />
+                  {t.gallery}
+                </h4>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+                  {project.gallery.map((item, idx) => (
+                    <div key={idx} className="space-y-3">
+                      <div className="aspect-video rounded-xl overflow-hidden border border-slate-200 dark:border-slate-800 group">
+                        <img 
+                          src={item.url} 
+                          alt={`Gallery ${idx}`} 
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                          referrerPolicy="no-referrer"
+                        />
+                      </div>
+                      {projectData.gallery?.[idx]?.description && (
+                        <p className="text-xs font-medium text-slate-500 dark:text-slate-400 px-1">
+                          {projectData.gallery[idx].description}
+                        </p>
+                      )}
+                    </div>
+                  ))}
+                </div>
               </div>
             )}
           </div>
@@ -967,16 +1196,19 @@ export default function App() {
     }
   }, [isDarkMode]);
 
-  // Google Analytics Page View Tracking
+  // Google Analytics Page View Tracking & Scroll to Top
   useEffect(() => {
-    if (typeof window !== 'undefined' && (window as any).gtag) {
-      const pagePath = activeTab === 'project-detail' && selectedProject 
-        ? `/projects/${selectedProject.id}` 
-        : `/${activeTab}`;
-      
-      (window as any).gtag('config', 'G-7NB9TV6KRG', {
-        page_path: pagePath,
-      });
+    if (typeof window !== 'undefined') {
+      window.scrollTo(0, 0);
+      if ((window as any).gtag) {
+        const pagePath = activeTab === 'project-detail' && selectedProject 
+          ? `/projects/${selectedProject.id}` 
+          : `/${activeTab}`;
+        
+        (window as any).gtag('config', 'G-7NB9TV6KRG', {
+          page_path: pagePath,
+        });
+      }
     }
   }, [activeTab, selectedProject]);
 
@@ -995,7 +1227,7 @@ export default function App() {
 
     switch (activeTab) {
       case 'home':
-        return <HomeView onProjectClick={handleProjectClick} lang={lang} />;
+        return <HomeView onProjectClick={handleProjectClick} lang={lang} isDarkMode={isDarkMode} />;
       case 'projects':
         return (
           <div className="py-12">
@@ -1043,7 +1275,7 @@ export default function App() {
       case 'contact':
         return <ContactView lang={lang} />;
       default:
-        return <HomeView onProjectClick={handleProjectClick} lang={lang} />;
+        return <HomeView onProjectClick={handleProjectClick} lang={lang} isDarkMode={isDarkMode} />;
     }
   };
 
@@ -1057,7 +1289,11 @@ export default function App() {
         lang={lang}
         setLang={setLang}
       />
-      <main className="flex-1 px-6 lg:px-12 max-w-7xl mx-auto w-full">
+      <main className="flex-1 px-6 lg:px-12 max-w-7xl mx-auto w-full relative">
+        {/* Subtle Vignette/Focus Overlays */}
+        <div className="fixed inset-x-0 top-0 h-48 bg-gradient-to-b from-background-light dark:from-background-dark via-background-light/80 dark:via-background-dark/80 to-transparent z-40 pointer-events-none opacity-90" />
+        <div className="fixed inset-x-0 bottom-0 h-32 bg-gradient-to-t from-background-light dark:from-background-dark to-transparent z-40 pointer-events-none opacity-70" />
+        
         <AnimatePresence mode="wait">
           <motion.div
             key={activeTab}
